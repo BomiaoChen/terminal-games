@@ -50,6 +50,7 @@ class Pipe:
 
 class FlappyBird(Game):
     title = "Flappy Bird"
+    controls_hint = "[SPACE] Flap   [P] Pause   [Q] Quit"
 
     # ---- Game state ----
 

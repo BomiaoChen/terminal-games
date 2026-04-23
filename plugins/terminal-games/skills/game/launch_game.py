@@ -18,7 +18,7 @@ sys.path.insert(0, PLUGIN_ROOT)
 import games  # noqa: F401
 from games.registry import get, list_games
 from lib.bridge import get_active_session_id
-from lib.game_config import set_auto_launch, load as load_config
+from lib.game_config import set_auto_launch, set_default_game, load as load_config
 from lib.state_manager import StateManager
 from lib.window_launcher import launch
 
@@ -32,7 +32,8 @@ def _print_banner(game_name: str, game_cls) -> None:
             print(f"\n  {game_cls.title}  —  Personal best: {high}  |  Plays: {plays}")
         else:
             print(f"\n  {game_cls.title}  —  First time playing!")
-        print("  Controls: [SPACE] Flap   [Q] Quit\n")
+        controls = getattr(game_cls, "controls_hint", "[SPACE] Flap   [Q] Quit")
+        print(f"  Controls: {controls}\n")
     except Exception:
         pass
 
@@ -68,8 +69,26 @@ def main():
         print("\n  Auto-launch disabled. Use /game to launch manually.\n")
         return
 
+    # Set default game: /game default <name>
+    if arg == "default":
+        new_default = sys.argv[2] if len(sys.argv) > 2 else None
+        if not new_default:
+            cfg = load_config()
+            print(f"\n  Current default game: {cfg['default_game']}")
+            print(f"  Available: {', '.join(list_games())}")
+            print(f"  Usage: /game default <game-name>\n")
+            return
+        available = list_games()
+        if new_default not in available:
+            print(f"  Unknown game: {new_default!r}. Available: {', '.join(available)}", file=sys.stderr)
+            sys.exit(1)
+        set_default_game(new_default)
+        print(f"\n  Default game set to: {new_default}\n")
+        return
+
     # Game launch
-    game_name = arg or "flappy-bird"
+    cfg = load_config()
+    game_name = arg or cfg.get("default_game", "flappy-bird")
     available = list_games()
 
     if not available:

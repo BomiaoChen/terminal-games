@@ -115,6 +115,49 @@
               "duration_seconds": 24.6
             }
           ]
+        },
+        "2048": {
+          "high_score": 428,
+          "total_play_count": 7,
+          "total_time_seconds": 569.0999999999999,
+          "last_played_at": "2026-04-23T17:40:16.352095+00:00",
+          "sessions": [
+            {
+              "played_at": "2026-04-23T17:12:01.387395+00:00",
+              "score": 332,
+              "duration_seconds": 55.9
+            },
+            {
+              "played_at": "2026-04-23T17:20:51.250654+00:00",
+              "score": 24,
+              "duration_seconds": 8.9
+            },
+            {
+              "played_at": "2026-04-23T17:23:50.121430+00:00",
+              "score": 232,
+              "duration_seconds": 84.3
+            },
+            {
+              "played_at": "2026-04-23T17:25:18.496630+00:00",
+              "score": 96,
+              "duration_seconds": 27.6
+            },
+            {
+              "played_at": "2026-04-23T17:30:49.370548+00:00",
+              "score": 96,
+              "duration_seconds": 293.4
+            },
+            {
+              "played_at": "2026-04-23T17:31:31.068274+00:00",
+              "score": 152,
+              "duration_seconds": 34.3
+            },
+            {
+              "played_at": "2026-04-23T17:40:16.352095+00:00",
+              "score": 428,
+              "duration_seconds": 61.0
+            }
+          ]
         }
       }
     }

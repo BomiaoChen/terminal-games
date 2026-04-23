@@ -5,3 +5,4 @@ then add `from . import <name>` below.
 """
 
 from . import flappy_bird  # noqa: F401
+from . import twenty48     # noqa: F401
