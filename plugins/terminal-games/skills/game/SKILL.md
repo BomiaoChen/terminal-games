@@ -4,12 +4,13 @@ description: >
   Use this skill when the user types "/game", "play a game", "launch game",
   "start flappy bird", "play while waiting", "terminal game",
   "/game on", "/game off", "enable auto-launch", "disable auto-launch",
-  "/game default", or "set default game".
+  "/game default", "set default game", "/game window", "change window size",
+  "bigger font", "set font size", or "resize game window".
   Launches an interactive terminal game in a new window while Claude works.
   Claude signals completion via a bridge file; the game shows "Claude is ready!"
   when done. Auto-launch mode opens the game automatically on every long prompt.
 user-invocable: true
-argument-hint: "[game-name | on | off | default <game-name>]"
+argument-hint: "[game-name | on | off | default <game-name> | window [font=N] [rows=N] [cols=N]]"
 ---
 
 When this skill is invoked:
@@ -37,6 +38,18 @@ Tell the user: "Default game set to: <name>. Use /game to launch it."
 python3 ${CLAUDE_PLUGIN_ROOT}/skills/game/launch_game.py default
 ```
 Print the raw output to the user.
+
+**`/game window`** — show current window settings:
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/game/launch_game.py window
+```
+Print the raw output to the user.
+
+**`/game window font=<N> rows=<N> cols=<N>`** — set window size/font (any subset of options):
+```bash
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/game/launch_game.py window font=<N> rows=<N> cols=<N>
+```
+Print the raw output to the user. Use `font=0 rows=0 cols=0` to reset to Terminal defaults.
 
 **`/game` or `/game <name>`** — launch the game now:
 1. Tell the user the game name and controls, then run:
