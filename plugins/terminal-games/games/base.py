@@ -19,7 +19,7 @@ The base class provides:
   - Auto-pause when Claude needs user attention (approval dialog, AskUserQuestion);
     overlay changes to "Claude responded" once Claude resumes; user presses [P] to
     continue playing
-  - Auto-close when a tool is denied (PostToolUse never fires within 30s, or
+  - Auto-close when a tool is denied (PostToolUse never fires within 20s, or
     Stop hook detects denial directly)
 """
 
@@ -38,7 +38,7 @@ from lib.state_manager import StateManager
 
 _POLL_INTERVAL = 0.5     # seconds between bridge file reads
 _NEEDS_INPUT_DEBOUNCE = 1.0  # needs_input must persist this long before auto-pausing
-_NEEDS_INPUT_TIMEOUT = 30.0  # close game if needs_input persists this long —
+_NEEDS_INPUT_TIMEOUT = 20.0  # close game if needs_input persists this long —
                               # indicates a denied tool where Stop didn't fire
 _FPS_CAP = 30
 

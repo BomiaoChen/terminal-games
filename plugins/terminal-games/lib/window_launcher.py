@@ -22,6 +22,18 @@ GAME_RUNNER = PLUGIN_ROOT / "skills" / "game" / "run_game.py"
 CLOSE_HELPER = PLUGIN_ROOT / "lib" / "close_game_window.py"
 
 
+def _window_settings_applescript(font_size: int, rows: int, cols: int) -> str:
+    """Return AppleScript lines to apply window settings to the frontmost tab (variable t)."""
+    lines = []
+    if font_size > 0:
+        lines.append(f"    set font size of t to {font_size}")
+    if rows > 0:
+        lines.append(f"    set number of rows of t to {rows}")
+    if cols > 0:
+        lines.append(f"    set number of columns of t to {cols}")
+    return "\n".join(lines)
+
+
 def _focus_running_game() -> bool:
     """If run_game.py is running, focus its exact Terminal tab. Returns True if found."""
     pid_result = subprocess.run(
@@ -51,6 +63,7 @@ def _focus_running_game() -> bool:
     repeat with w in windows
         repeat with t in tabs of w
             if tty of t is "{tty_path}" then
+                set selected of t to true
                 set index of w to 1
                 activate
                 return
@@ -66,6 +79,17 @@ def launch(game_name: str, session_id: str | None = None) -> None:
     # If a game is already running, focus its Terminal tab instead of opening a new one.
     if _focus_running_game():
         return
+
+    # Load window settings from config
+    try:
+        sys.path.insert(0, str(PLUGIN_ROOT))
+        from lib.game_config import load as load_config
+        cfg = load_config()
+        font_size = int(cfg.get("window_font_size", 0))
+        rows = int(cfg.get("window_rows", 0))
+        cols = int(cfg.get("window_cols", 0))
+    except Exception:
+        font_size, rows, cols = 0, 0, 0
 
     python = shlex.quote(sys.executable)
     close_helper = shlex.quote(str(CLOSE_HELPER))
@@ -96,11 +120,15 @@ def launch(game_name: str, session_id: str | None = None) -> None:
     tmp.close()
     os.chmod(tmp.name, 0o755)
 
+    window_settings = _window_settings_applescript(font_size, rows, cols)
     applescript = (
         'tell application "Terminal"\n'
         f'    set t to do script "{tmp.name}"\n'
-        '    activate\n'
-        '    set index of window 1 to 1\n'
+        + (window_settings + "\n" if window_settings else "")
+        + '    set w to window of t\n'
+        + '    set selected of t to true\n'
+        + '    set index of w to 1\n'
+        + '    activate\n'
         'end tell\n'
     )
     subprocess.run(["osascript", "-e", applescript], check=False)
