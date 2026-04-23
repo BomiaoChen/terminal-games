@@ -1,0 +1,5 @@
+{
+  "name": "terminal-games",
+  "version": "1.0.0",
+  "description": "Play terminal games (Flappy Bird, etc.) while waiting for Claude to finish processing"
+}

@@ -1,0 +1,15 @@
+{
+  "name": "local-marketplace",
+  "owner": {
+    "name": "bomiao.chen",
+    "email": "bomiao.chen@appfolio.com"
+  },
+  "plugins": [
+    {
+      "name": "terminal-games",
+      "description": "Play terminal games (Flappy Bird, etc.) while waiting for Claude to finish processing",
+      "category": "productivity",
+      "source": "./plugins/terminal-games"
+    }
+  ]
+}
