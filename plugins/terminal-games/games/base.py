@@ -239,11 +239,14 @@ class Game(ABC):
             pass
 
     def _record_score(self) -> None:
+        score = self.get_score()
+        if score == 0:
+            return
         duration = time.monotonic() - self._start_time
         try:
             StateManager().record_session(
                 game_name=self._registry_name,
-                score=self.get_score(),
+                score=score,
                 duration_seconds=round(duration, 1),
             )
         except Exception:
