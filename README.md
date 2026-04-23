@@ -36,7 +36,7 @@ claude plugin install terminal-games@local-marketplace
 
 2. Teammates run:
    ```bash
-   claude marketplace add <git-url>
+   claude marketplace add https://github.com/BomiaoChen/terminal-games.git
    claude plugin install terminal-games
    ```
 
