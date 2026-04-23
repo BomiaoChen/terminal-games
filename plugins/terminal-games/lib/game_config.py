@@ -4,7 +4,8 @@ Game config stored at ~/.claude/game_config.json.
 Schema:
   {
     "auto_launch": false,        -- launch game automatically on every long prompt
-    "min_prompt_length": 20      -- minimum prompt length to trigger auto-launch
+    "min_prompt_length": 20,     -- minimum prompt length to trigger auto-launch
+    "default_game": "flappy-bird" -- game launched when no name is specified
   }
 """
 
@@ -16,6 +17,7 @@ CONFIG_PATH = Path("~/.claude/game_config.json").expanduser()
 _DEFAULTS = {
     "auto_launch": False,
     "min_prompt_length": 20,
+    "default_game": "flappy-bird",
 }
 
 
@@ -36,4 +38,10 @@ def save(config: dict) -> None:
 def set_auto_launch(enabled: bool) -> None:
     cfg = load()
     cfg["auto_launch"] = enabled
+    save(cfg)
+
+
+def set_default_game(game_name: str) -> None:
+    cfg = load()
+    cfg["default_game"] = game_name
     save(cfg)

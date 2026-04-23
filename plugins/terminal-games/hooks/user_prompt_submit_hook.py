@@ -26,7 +26,7 @@ def main():
 
         cfg = load_config()
         if cfg.get("auto_launch") and len(prompt) >= cfg.get("min_prompt_length", 20):
-            launch("flappy-bird", session_id)
+            launch(cfg.get("default_game", "flappy-bird"), session_id)
 
     except Exception:
         pass  # Never fail Claude's prompt flow

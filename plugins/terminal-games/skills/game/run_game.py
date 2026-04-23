@@ -38,7 +38,8 @@ def main():
             print(f"\n  {game_cls.title}  —  Personal best: {stats['high_score']}  |  Plays: {stats['total_play_count']}")
         else:
             print(f"\n  {game_cls.title}  —  First time playing!")
-        print("  Controls: [SPACE] Flap   [P] Pause   [Q] Quit\n")
+        controls = getattr(game_cls, "controls_hint", "[SPACE] Flap   [P] Pause   [Q] Quit")
+        print(f"  Controls: {controls}\n")
     except Exception:
         pass
 
